@@ -1,8 +1,6 @@
 package hash;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,5 +30,27 @@ public class ReadFile {
         }
 
         return items;
+    }
+
+    public static void toFile(String fileName, List<SolutionPrinter> solutionPrinters) {
+        try {
+            Writer fileWriter = new FileWriter(fileName + ".txt");
+
+            fileWriter.write(solutionPrinters.size() + "\n");
+            solutionPrinters.stream().forEach(sp -> {
+                sp.solution.stream().forEach(line -> {
+                    try {
+                        fileWriter.write(line + "\n");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+            });
+
+            fileWriter.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
     }
 }

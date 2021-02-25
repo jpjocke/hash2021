@@ -1,12 +1,16 @@
 package hash;
 
+import sun.misc.IOUtils;
+import sun.reflect.misc.FieldUtil;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Controller {
 
-    public void calculate(MainInfo mi, List<Street> streets, List<CarPath> carPaths) {
+    public List<SolutionPrinter> calculate(MainInfo mi, List<Street> streets, List<CarPath> carPaths) {
         Map<Integer, Node> intersections= new HashMap<>();
         streets.stream().forEach(street -> {
             int id = street.intersectionEnd;
@@ -15,15 +19,21 @@ public class Controller {
             intersections.put(id, n);
         });
 
+        List<SolutionPrinter> solutionPrinters = new ArrayList<>();
+
         System.out.println(intersections.keySet().size());
         intersections.keySet().stream().forEach(k -> {
+            SolutionPrinter sp = new SolutionPrinter();
+
             Node intersection = intersections.get(k);
             //System.out.println(intersection);
-            System.out.println(intersection.identifier);
-            System.out.println(intersection.incoming.size());
-            intersection.incoming.stream().forEach(in -> System.out.println(in + " 1"));
-
+            sp.addLine(intersection.identifier);
+            sp.addLine(intersection.incoming.size());
+            intersection.incoming.stream().forEach(in -> sp.addLine(in + " 1"));
+            solutionPrinters.add(sp);
         });
+
+        return solutionPrinters;
 
 
     }

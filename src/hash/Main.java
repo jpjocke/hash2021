@@ -7,7 +7,9 @@ public class Main {
 
     public static void main(String[] args) {
 
-        List<String> aaa = ReadFile.readFileAsStringsPerLine("a.txt");
+        String filename = "a";
+
+        List<String> aaa = ReadFile.readFileAsStringsPerLine(filename + ".txt");
         aaa.stream().forEach(s -> System.out.println(s));
 
         int index = 0;
@@ -30,6 +32,8 @@ public class Main {
         }
 
         Controller c = new Controller();
-        c.calculate(a, streets, carPaths);
+        List<SolutionPrinter> solutionPrinters = c.calculate(a, streets, carPaths);
+
+        ReadFile.toFile(filename + "_solution", solutionPrinters);
     }
 }
