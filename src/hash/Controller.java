@@ -8,7 +8,7 @@ import java.util.Map;
 public class Controller {
 
     public List<SolutionPrinter> calculate(MainInfo mi, List<Street> streets, List<CarPath> carPaths) {
-        Map<Integer, Node> intersections= new HashMap<>();
+        Map<Integer, Node> intersections = new HashMap<>();
         streets.stream().forEach(street -> {
             int id = street.intersectionEnd;
             Node n = intersections.getOrDefault(id, new Node(id));
@@ -16,15 +16,37 @@ public class Controller {
             intersections.put(id, n);
         });
 
+        intersections.keySet().stream().forEach(k -> {
+            intersections.get(k).simulateCars(carPaths);
+            // System.out.println(intersections.get(k));
+        });
+
         List<SolutionPrinter> solutionPrinters = new ArrayList<>();
 
         intersections.keySet().stream().forEach(k -> {
+            Node intersection = intersections.get(k);
+            if (intersection.carsPassingThrough == 0) {
+                return;
+            }
+
             SolutionPrinter sp = new SolutionPrinter();
 
-            Node intersection = intersections.get(k);
             sp.addLine(intersection.identifier);
-            sp.addLine(intersection.incoming.size());
-            intersection.incoming.stream().forEach(in -> sp.addLine(in + " 1"));
+            sp.addLine(intersection.streetsWithCarsPassingThrough());
+            intersection.incomingWeight.keySet().stream().forEach(key -> {
+                int weight = intersection.incomingWeight.get(key);
+                if (weight == 0) {
+                    return;
+                }
+                sp.addLine(key + " " + weight);
+            });
+            /*
+            intersection.incoming.stream().forEach(in -> {
+                sp.addLine();
+                sp.addLine(in + " 1");
+            });
+
+             */
             solutionPrinters.add(sp);
         });
 

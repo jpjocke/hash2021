@@ -18,9 +18,11 @@ public class Main {
 
         System.out.println("Time : " + (tock - tick) + "ms");
         // orig 532 ms
+        // weights 39000 ms
     }
 
     private static void runForFile(String fileName) {
+        System.out.println("File : " + fileName + "ms");
         List<String> aaa = ReadFile.readFileAsStringsPerLine(fileName + ".txt");
 
         int index = 0;
