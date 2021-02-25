@@ -22,14 +22,19 @@ public class Node {
         incomingWeight.put(streetIn, 0);
     }
 
-    public int streetsWithCarsPassingThrough() {
-        int count = (int) incomingWeight.keySet().stream().filter(key -> incomingWeight.get(key) != 0).count();
-        return count;
+    public void removeZeros() {
+        List<String> zeroKeys = new ArrayList<>();
+        incomingWeight.keySet().stream().forEach(key -> {
+            if (incomingWeight.get(key) == 0) {
+                zeroKeys.add(key);
+            }
+        });
+        zeroKeys.stream().forEach(key -> incomingWeight.remove(key));
     }
 
     public void simulateCars(List<CarPath> carPaths) {
         carPaths.stream().forEach(carPath -> {
-            for(int i = 0; i < carPath.streets.length - 1; i++) {
+            for (int i = 0; i < carPath.streets.length - 1; i++) {
                 String street = carPath.streets[i];
                 Integer weight = incomingWeight.get(street);
                 if (weight != null) {
