@@ -38,15 +38,8 @@ public class Controller {
                 if (weight == 0) {
                     return;
                 }
-                sp.addLine(key + " " + weight);
+                sp.addLine(key + " " + "1");
             });
-            /*
-            intersection.incoming.stream().forEach(in -> {
-                sp.addLine();
-                sp.addLine(in + " 1");
-            });
-
-             */
             solutionPrinters.add(sp);
         });
 
