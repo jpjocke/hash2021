@@ -6,34 +6,42 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
+        long tick = System.currentTimeMillis();
+        String folder = "./files/";
+        runForFile(folder + "a");
+        runForFile(folder+ "b");
+        runForFile(folder + "c");
+        runForFile(folder + "d");
+        runForFile(folder + "e");
 
-        String filename = "a";
+        long tock = System.currentTimeMillis();
 
-        List<String> aaa = ReadFile.readFileAsStringsPerLine(filename + ".txt");
-        aaa.stream().forEach(s -> System.out.println(s));
+        System.out.println("Time : " + (tock - tick) + "ms");
+        // orig 532 ms
+    }
+
+    private static void runForFile(String fileName) {
+        List<String> aaa = ReadFile.readFileAsStringsPerLine(fileName + ".txt");
 
         int index = 0;
         MainInfo a = new MainInfo(aaa.get(index));
-        System.out.println(a);
         List<Street> streets = new ArrayList<>();
         List<CarPath> carPaths = new ArrayList<>();
         index++;
         for (int i = 1; i <= a.streetCount; i++) {
             Street s = new Street(aaa.get(i));
             streets.add(s);
-            System.out.println(s);
             index++;
         }
         while (index < aaa.size()) {
             CarPath cp = new CarPath(aaa.get(index));
             carPaths.add(cp);
-            System.out.println(cp);
             index++;
         }
 
         Controller c = new Controller();
         List<SolutionPrinter> solutionPrinters = c.calculate(a, streets, carPaths);
 
-        ReadFile.toFile(filename + "_solution", solutionPrinters);
+        ReadFile.toFile(fileName + "_solution", solutionPrinters);
     }
 }

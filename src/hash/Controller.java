@@ -1,8 +1,5 @@
 package hash;
 
-import sun.misc.IOUtils;
-import sun.reflect.misc.FieldUtil;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,12 +18,10 @@ public class Controller {
 
         List<SolutionPrinter> solutionPrinters = new ArrayList<>();
 
-        System.out.println(intersections.keySet().size());
         intersections.keySet().stream().forEach(k -> {
             SolutionPrinter sp = new SolutionPrinter();
 
             Node intersection = intersections.get(k);
-            //System.out.println(intersection);
             sp.addLine(intersection.identifier);
             sp.addLine(intersection.incoming.size());
             intersection.incoming.stream().forEach(in -> sp.addLine(in + " 1"));
@@ -38,18 +33,3 @@ public class Controller {
 
     }
 }
-
-/**
- 3
- 1
- 2
- rue-d-athenes 2
- rue-d-amsterdam 1
- 0
- 1
- rue-de-londres 2
- 2
- 1
- rue-de-moscou 1
-
- */
